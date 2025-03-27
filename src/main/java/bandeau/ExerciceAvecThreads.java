@@ -17,11 +17,29 @@ public class ExerciceAvecThreads {
         System.out.println("CTRL-C pour terminer le programme");
         // On doit jouer le scénario en même temps sur les trois bandeaux
         // On crée un thread pour chaque bandeau
-        s.playOn(b1);
+        /*s.playOn(b1);
         s.playOn(b2);
         s.playOn(b3);
         // On rejoue le scénario sur b1 quand le premier jeu est fini
-        s.playOn(b1);
+        s.playOn(b1);*/
+
+        for(int i = 0; i <=2; i++){
+            BandeauThreaded bandeauT1 = new BandeauThreaded(b1, s);
+            BandeauThreaded bandeauT2 = new BandeauThreaded(b2, s);
+            BandeauThreaded bandeauT3 = new BandeauThreaded(b3, s);
+
+            bandeauT1.startScenario();
+            bandeauT2.startScenario();
+            bandeauT3.startScenario();
+
+            try{
+                bandeauT1.getThread().join();
+                bandeauT2.getThread().join();
+                bandeauT3.getThread().join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private Scenario makeScenario() {
